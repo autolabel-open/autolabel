@@ -1,0 +1,27 @@
+[tool.poetry]
+package-mode = false
+name = "autolabel"
+version = "0.1.0"
+description = ""
+authors = ["Peng Yihao <xy20130630@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+loguru = "^0.7.2"
+rich = "^13.9.4"
+typer = "^0.13.1"
+docker = "^7.1.0"
+psutil = "^6.1.0"
+python-dateutil = "^2.9.0.post0"
+tqdm = "^4.67.0"
+pydantic = "^2.10.1"
+pyyaml = "^6.0.2"
+scapy = "^2.6.1"
+pydantic-settings = "^2.6.1"
+msgpack = "^1.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

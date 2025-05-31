@@ -1,0 +1,23 @@
+FROM ubuntu:22.04
+USER root
+
+# basic deps
+RUN apt-get update
+RUN apt-get install -y curl git build-essential python3
+
+# install node
+# WORKDIR /tmp
+# RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
+# RUN bash nodesource_setup.sh
+# RUN apt-get install -y nodejs
+
+# install modded node
+WORKDIR /tmp
+RUN git clone http://10.1.0.1:8929/finall1008/nodejs-instrumentation.git
+WORKDIR /tmp/nodejs-instrumentation
+RUN git checkout furina-experiment
+RUN ./configure
+RUN make -j $(nproc)
+RUN make install
+
+WORKDIR /root

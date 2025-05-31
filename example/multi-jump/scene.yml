@@ -1,0 +1,450 @@
+version: "3.9"
+
+services:
+  python-demo-app:
+    build:
+      context: ${CONTEXT_PATH:-.}/python-demo/app
+    container_name: python-demo-app
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.2
+    x-app-log: "/tmp/logs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  python-demo-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/python-demo/users
+    container_name: python-demo-users
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.3
+
+  juice-shop-server:
+    build:
+      context: ${CONTEXT_PATH:-.}/juice-shop
+    container_name: juice-shop-server
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.4
+    x-app-logs: "/applog"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  juice-shop-bot-normal-0:
+    build:
+      context: ${CONTEXT_PATH:-.}/juice-shop/bot
+    container_name: juice-shop-bot-normal-0
+    depends_on:
+      - juice-shop-server
+    environment:
+      attack: false
+      host_port: 192.168.123.4:3000
+      self_host: 192.168.123.6
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.6
+
+  geoserver-cve-2024-36401-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/geoserver/cve-2024-36401/bot
+    container_name: geoserver-cve-2024-36401-users
+    environment:
+      TARGET_URL: http://192.168.123.13:8080/geoserver/web
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.12
+
+  geoserver-cve-2024-36401-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/geoserver/cve-2024-36401
+    container_name: geoserver-cve-2024-36401-web
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/java-agent.jar"
+      LD_LIBRARY_PATH: "/quicklog"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/geoserver/ || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.13
+    x-app-log: "/mnt/geoserver/data_dir/logs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  gitlist-2018-1000533-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/gitlist/cve-2018-1000533/bot
+    container_name: gitlist-2018-1000533-users
+    environment:
+      TARGET_URL: http://192.168.123.15
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.14
+
+  gitlist-2018-1000533-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/gitlist/cve-2018-1000533
+    container_name: gitlist-2018-1000533-web
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.15
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "mkdir -p /applog; apache2-foreground 2>&1 > /applog/app.log",
+      ]
+    x-app-log: "/applog"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  joomla-cve-2015-8562-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/joomla/cve-2015-8562/bot
+    container_name: joomla-cve-2015-8562-users
+    environment:
+      TARGET_URL: http://192.168.123.17
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.16
+
+  joomla-cve-2015-8562-web:
+    image: docker.pengyihao.top/vulhub/joomla:3.4.5
+    container_name: joomla-cve-2015-8562-web
+    depends_on:
+      - joomla-cve-2015-8562-mysql
+    environment:
+      JOOMLA_DB_HOST: 192.168.123.18
+      JOOMLA_DB_PORT: 3306
+      JOOMLA_DB_USER: root
+      JOOMLA_DB_PASSWORD: vulhub
+      JOOMLA_DB_NAME: joomla
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.17
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "mkdir -p /applog; apache2-foreground 2>&1 > /applog/app.log",
+      ]
+    x-app-log: "/applog"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  joomla-cve-2015-8562-mysql:
+    image: docker.pengyihao.top/library/mysql:5.5
+    environment:
+      MYSQL_ROOT_PASSWORD: "vulhub"
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.18
+
+  kibana-cve-2018-17246-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/kibana/cve-2018-17246/bot
+    container_name: kibana-cve-2018-17246-users
+    environment:
+      TARGET_URL: http://192.168.123.26:5601
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.25
+
+  kibana-cve-2018-17246-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/kibana/cve-2018-17246
+    environment:
+      ELASTICSEARCH_URL: "http://192.168.123.27:9200"
+      ELASTICSEARCH_HOSTS: '["http://192.168.123.27:9200"]'
+    container_name: kibana-cve-2018-17246-web
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.26
+    healthcheck:
+      test: ["CMD-SHELL", "/bin/bash -c 'sleep 5' || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - kibana-cve-2018-17246-elasticsearch
+    command: ["/bin/bash", "-c", "kibana > /applogs/app.log 2>&1"]
+    # command: ["sleep", "infinity"]
+    x-app-log: "/applogs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  kibana-cve-2018-17246-elasticsearch:
+    image: docker.pengyihao.top/vulhub/elasticsearch:5.6.16
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.27
+
+  metabase-cve-2023-38646-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/metabase/cve-2023-38646/bot
+    container_name: metabase-cve-2023-38646-users
+    environment:
+      TARGET_URL: http://192.168.123.30:3000/
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.29
+
+  metabase-cve-2023-38646-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/metabase/cve-2023-38646
+    container_name: metabase-cve-2023-38646-web
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/java-agent.jar"
+      LD_LIBRARY_PATH: "/quicklog"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.30
+    x-app-log: "/applogs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  mongo-express-cve-2019-10758-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/mongo-express/cve-2019-10758/bot
+    container_name: mongo-express-cve-2019-10758-users
+    environment:
+      TARGET_URL: http://192.168.123.32:8081
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.31
+
+  mongo-express-cve-2019-10758-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/mongo-express/cve-2019-10758
+    container_name: mongo-express-cve-2019-10758-web
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/ || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.32
+    depends_on:
+      - mongo-express-cve-2019-10758-mongo
+    x-app-log: "/applogs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  mongo-express-cve-2019-10758-mongo:
+    image: docker.pengyihao.top/library/mongo:3.4
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.33
+
+  ofbiz-cve-2024-45507-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/ofbiz/cve-2024-45507/bot
+    container_name: ofbiz-cve-2024-45507-users
+    environment:
+      TARGET_URL: https://192.168.123.45:8443
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.44
+
+  ofbiz-cve-2024-45507-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/ofbiz/cve-2024-45507
+    container_name: ofbiz-cve-2024-45507-web
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/java-agent.jar"
+      LD_LIBRARY_PATH: "/quicklog"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -k -f https://localhost:8443/accounting/control/main || exit 1",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.45
+    x-app-log: "/usr/src/apache-ofbiz/runtime/logs"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  pgadmin-cve-2022-4223-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/pgadmin/cve-2022-4223/bot
+    container_name: pgadmin-cve-2022-4223-users
+    environment:
+      TARGET_URL: http://192.168.123.47:5050
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.46
+
+  pgadmin-cve-2022-4223-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/pgadmin/cve-2022-4223
+    container_name: pgadmin-cve-2022-4223-web
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5050 || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-app-log: "/applogs"
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.47
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  solr-cve-2019-17558-users:
+    build:
+      context: ${CONTEXT_PATH:-.}/solr/cve-2019-17558/bot
+    container_name: solr-cve-2019-17558-users
+    environment:
+      TARGET_URL: http://192.168.123.53:8983/solr
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.52
+
+  solr-cve-2019-17558-web:
+    build:
+      context: ${CONTEXT_PATH:-.}/solr/cve-2019-17558
+    container_name: solr-cve-2019-17558-web
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/java-agent.jar"
+      LD_LIBRARY_PATH: "/quicklog"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8983/ || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.53
+    x-app-log: "/opt/solr/server/logs/requests"
+    volumes:
+      - ${CONTEXT_PATH:-.}/attacker/curl:/bin/curl
+
+  multi-attacker:
+    build:
+      context: ${CONTEXT_PATH:-.}/attacker
+    container_name: multi-attacker
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.110
+
+x-attack-conns:
+  - 192.168.123.110:19999
+  - 192.168.123.110:19998
+  - 192.168.123.110:19997
+
+networks:
+  subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.123.0/24
+
+x-steps:
+  - name: "Python Demo User Background"
+    service: python-demo-users
+    command: ["poetry", "run", "python", "-u", "/app/test2.py"]
+    blocking: false
+
+  - name: "Python Demo User Admin Background"
+    service: python-demo-users
+    command: ["poetry", "run", "python", "-u", "/app/test2_admin.py"]
+    blocking: false
+
+  - name: "Juice Shop Bot Normal 0 Background"
+    service: juice-shop-bot-normal-0
+    command: ["poetry", "run", "python", "-u", "main.py"]
+    blocking: false
+
+  - name: "Geoserver cve-2024-36401 Users Background"
+    service: geoserver-cve-2024-36401-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Gitlist cve-2018-1000533 Users Background"
+    service: gitlist-2018-1000533-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Joomla cve-2015-8562 Users Background"
+    service: joomla-cve-2015-8562-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Kibana cve-2018-17246 Users Background"
+    service: kibana-cve-2018-17246-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Metabase cve-2023-38646 Users Background"
+    service: metabase-cve-2023-38646-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Mongo Express cve-2019-10758 Users Background"
+    service: mongo-express-cve-2019-10758-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Ofbiz cve-2024-45507 Users Background"
+    service: ofbiz-cve-2024-45507-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Pgadmin cve-2022-4223 Users Background"
+    service: pgadmin-cve-2022-4223-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Solr cve-2019-17558 Users Background"
+    service: solr-cve-2019-17558-users
+    command: ["python", "-u", "gen.py"]
+    blocking: false
+
+  - name: "Sleep for 10min"
+    service: multi-attacker
+    command: ["sleep", "600"]
+    blocking: true
+
+  - name: "Attack"
+    service: multi-attacker
+    command: ["python", "-u", "main.py"]
+    blocking: false
+    is_attack: true
+
+  - name: "Sleep for 10min"
+    service: multi-attacker
+    command: ["sleep", "600"]
+    blocking: true

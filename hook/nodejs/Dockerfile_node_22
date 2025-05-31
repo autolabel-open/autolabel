@@ -1,0 +1,17 @@
+FROM docker.pengyihao.top/library/ubuntu:22.04
+USER root
+
+# basic deps
+RUN apt-get update
+RUN apt-get install -y curl git build-essential python3 python-is-python3
+
+# install modded node
+WORKDIR /tmp
+RUN git clone http://10.1.0.1:8929/finall1008/nodejs-instrumentation.git
+WORKDIR /tmp/nodejs-instrumentation
+RUN git checkout pyh-v22
+RUN ./configure
+RUN make -j 5
+RUN make install
+
+WORKDIR /root

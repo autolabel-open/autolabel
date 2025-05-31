@@ -1,0 +1,27 @@
+FROM docker.pengyihao.top/library/centos:7
+USER root
+
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo
+RUN sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo
+RUN sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
+
+# basic deps
+RUN yum update -y
+RUN yum install -y curl git build-essential python
+
+# install modded node
+WORKDIR /tmp
+RUN git clone http://10.1.0.1:8929/finall1008/nodejs-instrumentation.git
+WORKDIR /tmp/nodejs-instrumentation
+RUN git checkout pyh-v8.14.0
+
+RUN yum groupinstall -y "Development Tools"
+
+
+RUN ./configure
+RUN make -j 5
+RUN make install
+
+RUN npm install -g yarn@1.10.1
+
+WORKDIR /root

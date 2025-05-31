@@ -1,0 +1,9 @@
+include:
+  - bots.yml
+
+services:
+  server:
+    image: juice-shop
+    ports:
+      - 3000:3000
+    restart: always

@@ -1,0 +1,25 @@
+# FROM ubuntu:22.04
+FROM debian:8
+USER root
+
+COPY ./debian8-sources.list /etc/apt/sources.list
+
+# basic deps
+RUN apt-get update
+RUN apt-get install -y --force-yes curl git build-essential
+
+# install modded node
+WORKDIR /tmp
+RUN git clone http://10.1.0.1:8929/finall1008/nodejs-instrumentation.git
+WORKDIR /tmp/nodejs-instrumentation
+RUN git checkout pyh-v6.14.4
+
+RUN apt-get install -y --force-yes python
+
+RUN ./configure
+RUN make -j 5
+RUN make install
+
+# RUN npm install -g npm@3.10.10
+
+WORKDIR /root

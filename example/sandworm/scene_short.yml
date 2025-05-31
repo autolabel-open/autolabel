@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  caladan:
+    build:
+      context: ${CONTEXT_PATH:-.}
+    container_name: caladan
+    networks:
+      subnet:
+        ipv4_address: 192.168.0.5
+
+  users:
+    build:
+      context: ${CONTEXT_PATH:-.}/attacker
+    container_name: user
+    networks:
+      subnet:
+        ipv4_address: 192.168.0.4
+
+networks:
+  subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+
+x-steps:
+  - name: "User Background"
+    service: users
+    command: ["python", "-u", "normal.py"]
+    blocking: false
+
+  - name: "Wait for 10min"
+    service: users
+    command: ["sleep", "10"]
+    blocking: true
+
+  - name: "Attack"
+    service: users
+    command: ["python", "-u", "attack.py"]
+    blocking: true
+    is_attack: true
+
+  - name: "Wait for 10min"
+    service: users
+    command: ["sleep", "10"]
+    blocking: true

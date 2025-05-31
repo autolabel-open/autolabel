@@ -1,0 +1,656 @@
+services:
+  bot-attack-0:
+    depends_on:
+    - server
+    environment:
+    - attack=True
+    - self_host=bot-attack-0
+    - self_host=bot-attack-1
+    - self_host=bot-attack-2
+    - self_host=bot-attack-3
+    - self_host=bot-attack-4
+    image: juice-shop-bot:latest
+  bot-attack-1:
+    depends_on:
+    - server
+    environment:
+    - attack=True
+    - self_host=bot-attack-0
+    - self_host=bot-attack-1
+    - self_host=bot-attack-2
+    - self_host=bot-attack-3
+    - self_host=bot-attack-4
+    image: juice-shop-bot:latest
+  bot-attack-2:
+    depends_on:
+    - server
+    environment:
+    - attack=True
+    - self_host=bot-attack-0
+    - self_host=bot-attack-1
+    - self_host=bot-attack-2
+    - self_host=bot-attack-3
+    - self_host=bot-attack-4
+    image: juice-shop-bot:latest
+  bot-attack-3:
+    depends_on:
+    - server
+    environment:
+    - attack=True
+    - self_host=bot-attack-0
+    - self_host=bot-attack-1
+    - self_host=bot-attack-2
+    - self_host=bot-attack-3
+    - self_host=bot-attack-4
+    image: juice-shop-bot:latest
+  bot-attack-4:
+    depends_on:
+    - server
+    environment:
+    - attack=True
+    - self_host=bot-attack-0
+    - self_host=bot-attack-1
+    - self_host=bot-attack-2
+    - self_host=bot-attack-3
+    - self_host=bot-attack-4
+    image: juice-shop-bot:latest
+  bot-normal-0:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-0
+    image: juice-shop-bot:latest
+  bot-normal-1:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-1
+    image: juice-shop-bot:latest
+  bot-normal-10:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-10
+    image: juice-shop-bot:latest
+  bot-normal-11:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-11
+    image: juice-shop-bot:latest
+  bot-normal-12:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-12
+    image: juice-shop-bot:latest
+  bot-normal-13:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-13
+    image: juice-shop-bot:latest
+  bot-normal-14:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-14
+    image: juice-shop-bot:latest
+  bot-normal-15:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-15
+    image: juice-shop-bot:latest
+  bot-normal-16:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-16
+    image: juice-shop-bot:latest
+  bot-normal-17:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-17
+    image: juice-shop-bot:latest
+  bot-normal-18:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-18
+    image: juice-shop-bot:latest
+  bot-normal-19:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-19
+    image: juice-shop-bot:latest
+  bot-normal-2:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-2
+    image: juice-shop-bot:latest
+  bot-normal-20:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-20
+    image: juice-shop-bot:latest
+  bot-normal-21:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-21
+    image: juice-shop-bot:latest
+  bot-normal-22:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-22
+    image: juice-shop-bot:latest
+  bot-normal-23:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-23
+    image: juice-shop-bot:latest
+  bot-normal-24:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-24
+    image: juice-shop-bot:latest
+  bot-normal-25:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-25
+    image: juice-shop-bot:latest
+  bot-normal-26:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-26
+    image: juice-shop-bot:latest
+  bot-normal-27:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-27
+    image: juice-shop-bot:latest
+  bot-normal-28:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-28
+    image: juice-shop-bot:latest
+  bot-normal-29:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-29
+    image: juice-shop-bot:latest
+  bot-normal-3:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-3
+    image: juice-shop-bot:latest
+  bot-normal-30:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-30
+    image: juice-shop-bot:latest
+  bot-normal-31:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-31
+    image: juice-shop-bot:latest
+  bot-normal-32:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-32
+    image: juice-shop-bot:latest
+  bot-normal-33:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-33
+    image: juice-shop-bot:latest
+  bot-normal-34:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-34
+    image: juice-shop-bot:latest
+  bot-normal-35:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-35
+    image: juice-shop-bot:latest
+  bot-normal-36:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-36
+    image: juice-shop-bot:latest
+  bot-normal-37:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-37
+    image: juice-shop-bot:latest
+  bot-normal-38:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-38
+    image: juice-shop-bot:latest
+  bot-normal-39:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-39
+    image: juice-shop-bot:latest
+  bot-normal-4:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-4
+    image: juice-shop-bot:latest
+  bot-normal-40:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-40
+    image: juice-shop-bot:latest
+  bot-normal-41:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-41
+    image: juice-shop-bot:latest
+  bot-normal-42:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-42
+    image: juice-shop-bot:latest
+  bot-normal-43:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-43
+    image: juice-shop-bot:latest
+  bot-normal-44:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-44
+    image: juice-shop-bot:latest
+  bot-normal-45:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-45
+    image: juice-shop-bot:latest
+  bot-normal-46:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-46
+    image: juice-shop-bot:latest
+  bot-normal-47:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-47
+    image: juice-shop-bot:latest
+  bot-normal-48:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-48
+    image: juice-shop-bot:latest
+  bot-normal-49:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-49
+    image: juice-shop-bot:latest
+  bot-normal-5:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-5
+    image: juice-shop-bot:latest
+  bot-normal-50:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-50
+    image: juice-shop-bot:latest
+  bot-normal-51:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-51
+    image: juice-shop-bot:latest
+  bot-normal-52:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-52
+    image: juice-shop-bot:latest
+  bot-normal-53:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-53
+    image: juice-shop-bot:latest
+  bot-normal-54:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-54
+    image: juice-shop-bot:latest
+  bot-normal-55:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-55
+    image: juice-shop-bot:latest
+  bot-normal-56:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-56
+    image: juice-shop-bot:latest
+  bot-normal-57:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-57
+    image: juice-shop-bot:latest
+  bot-normal-58:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-58
+    image: juice-shop-bot:latest
+  bot-normal-59:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-59
+    image: juice-shop-bot:latest
+  bot-normal-6:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-6
+    image: juice-shop-bot:latest
+  bot-normal-60:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-60
+    image: juice-shop-bot:latest
+  bot-normal-61:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-61
+    image: juice-shop-bot:latest
+  bot-normal-62:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-62
+    image: juice-shop-bot:latest
+  bot-normal-63:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-63
+    image: juice-shop-bot:latest
+  bot-normal-64:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-64
+    image: juice-shop-bot:latest
+  bot-normal-65:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-65
+    image: juice-shop-bot:latest
+  bot-normal-66:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-66
+    image: juice-shop-bot:latest
+  bot-normal-67:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-67
+    image: juice-shop-bot:latest
+  bot-normal-68:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-68
+    image: juice-shop-bot:latest
+  bot-normal-69:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-69
+    image: juice-shop-bot:latest
+  bot-normal-7:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-7
+    image: juice-shop-bot:latest
+  bot-normal-70:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-70
+    image: juice-shop-bot:latest
+  bot-normal-71:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-71
+    image: juice-shop-bot:latest
+  bot-normal-72:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-72
+    image: juice-shop-bot:latest
+  bot-normal-73:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-73
+    image: juice-shop-bot:latest
+  bot-normal-74:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-74
+    image: juice-shop-bot:latest
+  bot-normal-75:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-75
+    image: juice-shop-bot:latest
+  bot-normal-76:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-76
+    image: juice-shop-bot:latest
+  bot-normal-77:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-77
+    image: juice-shop-bot:latest
+  bot-normal-78:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-78
+    image: juice-shop-bot:latest
+  bot-normal-79:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-79
+    image: juice-shop-bot:latest
+  bot-normal-8:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-8
+    image: juice-shop-bot:latest
+  bot-normal-80:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-80
+    image: juice-shop-bot:latest
+  bot-normal-81:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-81
+    image: juice-shop-bot:latest
+  bot-normal-82:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-82
+    image: juice-shop-bot:latest
+  bot-normal-83:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-83
+    image: juice-shop-bot:latest
+  bot-normal-84:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-84
+    image: juice-shop-bot:latest
+  bot-normal-85:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-85
+    image: juice-shop-bot:latest
+  bot-normal-86:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-86
+    image: juice-shop-bot:latest
+  bot-normal-87:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-87
+    image: juice-shop-bot:latest
+  bot-normal-88:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-88
+    image: juice-shop-bot:latest
+  bot-normal-89:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-89
+    image: juice-shop-bot:latest
+  bot-normal-9:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-9
+    image: juice-shop-bot:latest
+  bot-normal-90:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-90
+    image: juice-shop-bot:latest
+  bot-normal-91:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-91
+    image: juice-shop-bot:latest
+  bot-normal-92:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-92
+    image: juice-shop-bot:latest
+  bot-normal-93:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-93
+    image: juice-shop-bot:latest
+  bot-normal-94:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-94
+    image: juice-shop-bot:latest
+  bot-normal-95:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-95
+    image: juice-shop-bot:latest
+  bot-normal-96:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-96
+    image: juice-shop-bot:latest
+  bot-normal-97:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-97
+    image: juice-shop-bot:latest
+  bot-normal-98:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-98
+    image: juice-shop-bot:latest
+  bot-normal-99:
+    depends_on:
+    - server
+    environment:
+    - self_host=bot-normal-99
+    image: juice-shop-bot:latest

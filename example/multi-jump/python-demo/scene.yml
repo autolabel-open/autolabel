@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ${CONTEXT_PATH}/app
+    container_name: app
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.2
+    x-app-log: "/tmp/logs"
+
+  users:
+    build:
+      context: ${CONTEXT_PATH}/users
+    container_name: user
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.3
+
+networks:
+  subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.123.0/24
+
+x-steps:
+  - name: "User Background"
+    service: users
+    command: ["poetry", "run", "python", "-u", "/app/test2.py"]
+    blocking: false
+
+  - name: "Admin Background"
+    service: users
+    command: ["poetry", "run", "python", "-u", "/app/test2_admin.py"]
+    blocking: false
+
+  - name: "Wait for 10min"
+    service: users
+    command: ["sleep", "600"]
+    blocking: true
+
+  - name: "Attack"
+    service: users
+    command: ["poetry", "run", "python", "-u", "/app/attack2.py"]
+    blocking: false
+    is_attack: true
+
+  - name: "Wait for 10min"
+    service: users
+    command: ["sleep", "600"]
+    blocking: true

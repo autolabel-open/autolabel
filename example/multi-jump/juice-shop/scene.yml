@@ -1,0 +1,77 @@
+networks:
+  subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.123.0/24
+services:
+  bot-attack-0:
+    cpus: 0.5
+    build:
+      context: ${CONTEXT_PATH:-.}/bot
+    container_name: bot-attack-0
+    depends_on:
+      - server
+    environment:
+      attack: true
+      host_port: 192.168.123.4:3000
+      self_host: 192.168.123.3
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.3
+  bot-normal-0:
+    cpus: 0.5
+    build:
+      context: ${CONTEXT_PATH:-.}/bot
+    container_name: bot-normal-0
+    depends_on:
+      - server
+    environment:
+      host_port: 192.168.123.4:3000
+      self_host: 192.168.123.2
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.2
+  server:
+    cpus: 0.5
+    build:
+      context: ${CONTEXT_PATH:-.}
+    networks:
+      subnet:
+        ipv4_address: 192.168.123.4
+    ports:
+      - 3000:3000
+    x-app-log: /applog
+
+x-attack-conns:
+  - 192.168.123.3:8888
+
+x-steps:
+  - blocking: false
+    command:
+      - poetry
+      - run
+      - python
+      - main.py
+    name: bot-normal-0
+    service: bot-normal-0
+
+  - name: "Wait for 10min"
+    service: bot-attack-0
+    command: ["sleep", "600"]
+    blocking: true
+
+  - blocking: false
+    command:
+      - poetry
+      - run
+      - python
+      - main.py
+    is_attack: true
+    name: bot-attack-0
+    service: bot-attack-0
+
+  - name: "Wait for 10min"
+    service: bot-attack-0
+    command: ["sleep", "600"]
+    blocking: true

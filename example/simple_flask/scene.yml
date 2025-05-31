@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  kali_attacker:
+    build:
+      context: ${CONTEXT_PATH}/kali_attacker
+    container_name: attacker_container
+    networks:
+      my_network:
+        ipv4_address: 192.168.123.2
+
+  background:
+    build:
+      context: ${CONTEXT_PATH}/background
+    container_name: background_container
+    networks:
+      my_network:
+        ipv4_address: 192.168.123.3
+
+  flask_app:
+    build:
+      context: ${CONTEXT_PATH}/flask_app
+    container_name: flask_app_container
+    networks:
+      my_network:
+        ipv4_address: 192.168.123.4
+    x-app-log: "/app/logs"
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.123.0/24
+
+x-steps:
+  - name: "Benign Background"
+    service: background
+    command: ["python3", "/app/bg.py"]
+    blocking: false
+
+  - name: "Attack"
+    service: kali_attacker
+    command: ["python3", "/app/attack.py"]
+    blocking: true
+    is_attack: true
