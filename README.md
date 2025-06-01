@@ -6,6 +6,7 @@ This provides the code & documentation & image packages for AutoLabel.
 - Zenodo address for pre-generated datasets:
   - Part1: https://doi.org/10.5281/zenodo.15528780
   - Part2: https://doi.org/10.5281/zenodo.15532579
+  - Part3: https://doi.org/10.5281/zenodo.15568798
 - For details, please refer to https://github.com/autolabel-open/autolabel.
 
 ## Scenario Description
