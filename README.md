@@ -41,3 +41,15 @@ docker load -i ./all_images.tar
 ## Usage
 
 Refer to `build.sh`.
+
+## Citation
+
+```
+@inproceedings{peng2025autolabel,
+  title={$\{$AutoLabel$\}$: Automated $\{$Fine-Grained$\}$ Log Labeling for Cyber Attack Dataset Generation},
+  author={Peng, Yihao and Zhang, Tongxin and Lai, Jieshao and Zhang, Yuxuan and Wu, Yiming and Wan, Hai and Zhao, Xibin},
+  booktitle={34th USENIX Security Symposium (USENIX Security 25)},
+  pages={547--566},
+  year={2025}
+}
+```
