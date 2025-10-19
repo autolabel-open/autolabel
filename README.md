@@ -1,6 +1,6 @@
-# AutoLabel
+# AutoLabel: Automated Fine-Grained Log Labeling for Cyber Attack Dataset Generation
 
-This provides the code & documentation & image packages for AutoLabel.
+This provides the code & documentation & image packages for AutoLabel, USENIX Security '25.
 
 - Zenodo address for code & documentation & image packages: https://doi.org/10.5281/zenodo.15540310
 - Zenodo address for pre-generated datasets:
